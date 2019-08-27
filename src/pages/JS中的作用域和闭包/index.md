@@ -4,7 +4,7 @@ date: '2019-08-10'
 spoiler: JavaScript中的作用域和闭包
 ---
 
-> 所有内容都是根据<< You Don't Know JS >>整理而来
+> 所有内容都是在读完[<< You Don't Know JS >>](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)上卷第一部分整理而来
 
 ## 作用域
 
@@ -17,7 +17,7 @@ spoiler: JavaScript中的作用域和闭包
 
 ### 1. LHS查询和RHS查询
 
-js引擎会为需要的变量进行**LHS**查询和**RHS**查询。当要找到某个变量并为其执行赋值操作时则进行LHS查询，只是简单的获取某个变量则进行RHS查询
+js引擎会为需要的变量进行`LHS`查询和`RHS`查询。当要找到某个变量并为其执行赋值操作时则进行LHS查询，只是简单的获取某个变量则进行RHS查询
 
 ```javascript
 function foo(b) {
@@ -31,21 +31,21 @@ foo(a)
 
 LHS查询：
 
-1. 执行var a = 2时，会对变量a进行赋值操作
-2. 调用foo()时有一步隐含的赋值操作b=2
+1. 执行`var a = 2`时，会对变量a进行赋值操作
+2. 调用`foo()`时有一步隐含的赋值操作`b=2`
 
 RHS查询：
 
-1. 调用foo()时对foo有一次RHS查询
+1. 调用`foo()`时对foo有一次RHS查询
 2. 调用foo()时要传递a参数，对a有一次RHS查询
-3. 执行foo时会对console对象进行一次RHS查询
+3. 执行foo时会对`console`对象进行一次RHS查询
 4. 执行console.log操作时要获取b
 
 ### 2. 查询异常
 
 在变量还没有声明（在任何作用域中都无法找到该变量）时，进行LHS查询或RHS查询的行为是不同的
 
-```javascript
+```javascript{2}
 function foo(b) {
   console.log(b + c)
 }
@@ -53,9 +53,9 @@ var a = 2
 foo(a)
 ```
 
-执行上述代码，js引擎会抛出**ReferenceError**异常，这是因为在对变量c进行RHS查询时是无法找到该变量的
+执行上述代码，js引擎会抛出`ReferenceError`异常，这是因为在对变量c进行RHS查询时是无法找到该变量的
 
-相较之下，当js引擎执行LHS查询时，如果在顶层（全局作用域）中也无法找到目标变量，就会在全局作用域中创建一个具有该名称的变量。如果RHS查询找到了一个变量但为其值进行了不合理的操作，那么js引擎会抛出**TypeError**异常
+相较之下，当js引擎执行LHS查询时，如果在顶层（全局作用域）中也无法找到目标变量，就会在全局作用域中创建一个具有该名称的变量。如果RHS查询找到了一个变量但为其值进行了不合理的操作，那么js引擎会抛出`TypeError`异常
 
 ### 3.词法作用域
 
@@ -123,7 +123,7 @@ console.log(i)
 
 如果我们想让上述代码片段中的变量i只存在于for循环中，也就是说在全局作用域中无法对i进行访问，那么就需要块作用域
 
-块作用域最常见的创建方式就是ES6中新引入的let关键字。出了let，我们还可以使用const、with、try/catch来创建，这里不做讨论
+块作用域最常见的创建方式就是ES6中新引入的`let`关键字。出了let，我们还可以使用`const、with、try/catch`来创建，这里不做讨论
 
 上述代码可以用let来改写：
 
@@ -137,7 +137,7 @@ for(let i = 0;i<6;i++) {
 
 下面是一段经典的代码片段：
 
-```javascript
+```javascript{1}
 for(var i = 0;i<6;i++) {
   setTimeout(function(){console.log(i)},1000)
 }
@@ -145,7 +145,7 @@ for(var i = 0;i<6;i++) {
 
 结果打印6个6
 
-```javascript
+```javascript{1}
 for(let i = 0;i<6;i++) {
   setTimeout(function(){console.log(i)},1000)
 }
@@ -166,7 +166,7 @@ var a = 2
 
 上面的代码其实等同于下面：
 
-```javascript
+```javascript{1}
 var a = undefined
 console.log(a)
 a = 2
@@ -184,7 +184,7 @@ function foo() {
 }
 ```
 
-打印undefined 由此可见foo函数的声明被提升了。另外要注意的是，**每个作用域都会进行提升操作**。上述代码中的变量a的声明就是在所属作用域foo函数中进行提升的
+打印`undefined` 由此可见foo函数的声明被提升了。另外要注意的是，**每个作用域都会进行提升操作**。上述代码中的变量a的声明就是在所属作用域foo函数中进行提升的
 
 **函数声明会被提升，但函数表达式（区分函数声明和表达式最简单的方法就是看function关键字出现在整个声明中的位置，如果是第一个词就是函数声明，否则就是一个函数表达式）不会**。代码如下：
 
@@ -196,7 +196,7 @@ var foo = function bar() {
 }
 ```
 
-报TypeError异常和ReferenceError异常
+报`TypeError`异常和`ReferenceError`异常
 
 报TypeError异常是因为变量foo声明会被提升 此时foo为undefined 当对foo()进行RHS查询时会导致非法操作，所以报TypeError异常而不是ReferenceError
 
@@ -218,6 +218,8 @@ function foo() {
 ```
 
 打印100 var foo会被忽略 第二个foo的函数声明会覆盖第一个
+
+---
 
 ## 闭包
 
@@ -272,7 +274,7 @@ foo('Hello World!')
 下面来解释为什么能打印Hello World：
 
 1. foo函数创建了一个函数作用域
-2. foo作用域内部存在一个传递给setTimout的函数，我们称他为回调函数
+2. foo作用域内部存在一个传递给`setTimout`的函数，我们称他为回调函数
 3. 因为回调函数声明在foo内部作用域中，所以它能狗访问foo内部的标识符message，拥有了对foo内部作用域的闭包
 4. 当执行foo后，闭包阻止了foo被垃圾回收机制处理，所以回调函数可以正常运行并访问标识符message
 
