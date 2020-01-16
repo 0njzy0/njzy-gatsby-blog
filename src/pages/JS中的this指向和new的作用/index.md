@@ -1,5 +1,5 @@
 ---
-title: JS中的this指向和new的作用
+title: JavaScript中的this指向和new的作用
 date: 2020-01-02
 spoiler: 在函数调用时，this到底指向谁，new具体是啥作用
 ---
@@ -162,10 +162,10 @@ function Foo() {
   console.log(this.a)
 }
 
-function FakeNew(...args) {
+function FakeNew(func,...args) {
   const obj = {}
-  Object.setPrototypeOf(obj,Foo.prototype)
-  const result = Foo.apply(obj,args)
+  Object.setPrototypeOf(obj,func.prototype)
+  const result = func.apply(obj,args)
   return result instanceof Object ? result : obj
 }
 
