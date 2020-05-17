@@ -23,7 +23,7 @@ class Bio extends React.Component {
           }}
         />
         <p style={{ maxWidth: 310 }}>
-          Personal blog by <a href="https://github.com/0njzy0">NJZY</a>
+          Personal blog by <a href="https://github.com/njzydark">NJZY</a>
           <br />
           非淡泊无以明志，非宁静无以致远
         </p>

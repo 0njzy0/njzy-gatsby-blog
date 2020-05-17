@@ -1,4 +1,4 @@
-# [NJZYBLOG.CN](https://njzyblog.netlify.com/)
+# [NJZY'S BLOG](https://njzyblog.netlify.com/)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/50ee7d50-81b1-4f39-9b65-58ff6479091f/deploy-status)](https://app.netlify.com/sites/njzyblog/deploys)
 

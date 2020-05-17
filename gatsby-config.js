@@ -5,7 +5,7 @@ module.exports = {
     title: "NJZY'S BLOG",
     author: 'NJZY',
     description: '非淡泊无以明志，非宁静无以致远',
-    siteUrl: 'https://njzyblog.cn',
+    siteUrl: 'https://blog.njzydark.com',
     social: {
       twitter: '@njzydark',
     },
