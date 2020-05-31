@@ -16,7 +16,7 @@ import {
 } from '../utils/i18n';
 import { defaultLang } from '../../i18n';
 
-const GITHUB_USERNAME = '0njzy0';
+const GITHUB_USERNAME = 'njzydark';
 const GITHUB_REPO_NAME = 'njzy-gatsby-blog';
 const systemFont = `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",

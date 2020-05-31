@@ -4,7 +4,7 @@ date: '2019-05-07'
 spoiler: 利用winston和morgan记录express日志信息
 ---
 
-最近忙着做毕业设计，项目是一个多用户博客程序。后端技术栈为express+mongodb，为了能够更为详细的记录程序运行日志，便开始研究如何使用winston和morgan。项目代码已托管到GitHub，感兴趣的同学可以看一下：[PureBlog-API](https://github.com/0njzy0/PureBlog-API)
+最近忙着做毕业设计，项目是一个多用户博客程序。后端技术栈为express+mongodb，为了能够更为详细的记录程序运行日志，便开始研究如何使用winston和morgan。项目代码已托管到GitHub，感兴趣的同学可以看一下：[PureBlog-API](https://github.com/njzydark/PureBlog-API)
 
 ## 效果
 
