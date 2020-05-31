@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import Toggle from './Toggle';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 
 import { rhythm, scale } from '../utils/typography';
 import sun from '../assets/sun.png';
@@ -127,7 +127,7 @@ class Layout extends React.Component {
                   ),
                 }}
                 checked={this.state.theme === 'dark'}
-                onChange={e =>
+                onChange={(e) =>
                   window.__setPreferredTheme(
                     e.target.checked ? 'dark' : 'light'
                   )
