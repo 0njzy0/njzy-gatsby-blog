@@ -1,7 +1,7 @@
 ---
-title: 在umijs中配置多环境打包
+title: 在umi中配置多环境打包
 date: 2019-08-29
-spoiler: 记录一次在umijs配置多环境打包的问题
+spoiler: 记录一次在umi配置多环境打包的问题
 ---
 
 ## 起因

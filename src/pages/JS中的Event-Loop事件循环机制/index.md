@@ -1,7 +1,7 @@
 ---
-title: JavaScript中的Event-Loop事件循环机制
+title: JS中的Event-Loop事件循环机制
 date: 2019-09-02
-spoiler: JavaScript中的Event-Loop事件循环机制
+spoiler: JS中的Event-Loop事件循环机制
 ---
 
 ## 前言

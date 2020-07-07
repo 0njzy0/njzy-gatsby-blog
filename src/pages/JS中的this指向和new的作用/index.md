@@ -1,5 +1,5 @@
 ---
-title: JavaScript中的this指向和new的作用
+title: JS中的this指向和new的作用
 date: 2020-01-12
 spoiler: 在函数调用时，this到底指向谁，new具体是啥作用
 ---

@@ -1,7 +1,7 @@
 ---
-title: JavaScript中的作用域和闭包
+title: JS中的作用域和闭包
 date: '2019-08-10'
-spoiler: JavaScript中的作用域和闭包
+spoiler: JS中的作用域和闭包
 ---
 
 > 所有内容都是在读完[<< You Don't Know JS >>](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)上卷第一部分整理而来

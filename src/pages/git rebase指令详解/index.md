@@ -1,5 +1,5 @@
 ---
-title: git rebase指令详解
+title: Git Rebase指令详解
 date: 2019-11-16
 spoiler: 这里主要介绍一下如何利用git rebase指令进行commit的修改和分支合并
 ---
