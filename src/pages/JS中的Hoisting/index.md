@@ -13,7 +13,7 @@ spoiler: 详解JS中的声明提升
 5. 函数参数会得到声明提升吗
 6. let 和 const 存不存在 Hosting
 7. 什么是 TDZ
-8. Hoisting 发生在什么阶段
+8. 在块内进行函数声明有什么异常表现
 
 ## 何为 Hoisting
 
@@ -62,12 +62,9 @@ function foo(){
 
 ## 为什么需要 Hoisting
 
-至于为啥需要 Hoisting，大家可以看下这篇文章 [Two words about “hoisting”.](http://dmitrysoshnikov.com/notes/note-4-two-words-about-hoisting/)
+至于为啥需要 Hoisting，详细内容看下这篇文章 [Two words about “hoisting”.](http://dmitrysoshnikov.com/notes/note-4-two-words-about-hoisting/)
 
-文章的结论是，使用 Hoisting 有以下两个好处：
-
-1. mutual recursion 可以相互递归
-2. optimization 性能提升
+文章的结论是，使用 Hoisting 主要是为了使函数可以相互递归调用 mutual recursion
 
 这里我们看一下相互递归的例子：
 
@@ -78,12 +75,12 @@ function loop(n) {
   }
 }
 
+loop(0);
+
 function logEvenOrOdd(n) {
   console.log(n, n % 2 ? "Odd" : "Even");
   loop(n);
 }
-
-loop(0);
 ```
 
 可见这里foo和bar进行了相互递归调用，如果不存在 Hoisting，它们之前的相互调用是根本没办法实现的
@@ -144,8 +141,8 @@ a2
 
 由输出结果我们可以得出以下结论：
 
-- 函数声明提升优先级比变量声明提升高，会覆盖变量声明提升
-- 同名的函数声明提升会被覆盖
+- 函数声明的优先级比变量声明高
+- 同名的函数声明会被覆盖
 
 ## 函数参数会得到声明提升吗
 
@@ -202,11 +199,11 @@ foo();
 
 这段代码的实际执行结果不是 `1`，而是执行报错了：`ReferenceError: Cannot access 'a' before initialization`
 
-可见let生命的变量实际上是得到了提升，只不过表现跟var不同，这也就是接下来要说到的问题: TDZ
+可见`let`声明的变量实际上是得到了提升，只不过表现跟`var`不同，这也就是接下来要说到的概念: `TDZ`
 
 ## 什么是 TDZ
 
-TDZ全称为：Temporal Dead Zone，一句话概括就是，在提升之后和赋值之前这段时间就被成为TDZ，在这段时间内是无法访问变量的
+TDZ 全称为：Temporal Dead Zone，一句话概括就是：在提升之后和赋值之前这段时间就被成为 TDZ，在这段时间内是无法访问变量的
 
 ```js
 var a = 1;
@@ -227,46 +224,130 @@ function foo() {
 }
 ```
 
-这里我们要注意一个点，TDZ跟时间有关，跟空间无关，也就是说虽然b在foo之前被赋值了，但是时间上，foo实际执行时，b还没有被赋值，也就是还处于TDZ时间范围内，所以上面代码执行时会报错：
+这里我们要注意一个点，TDZ 跟时间有关，跟空间无关，也就是说虽然`b`在`foo`之前被赋值了，但是时间上，`foo`实际执行时，`b`还没有被赋值，也就是还处于 TDZ 时间范围内，所以上面代码执行时会报错：
 
 ```bash
 ReferenceError: Cannot access 'b' before initialization
 ```
 
-## Hoisting 发生在什么阶段
+## 在块内进行函数声明有什么异常表现
 
-那么 Hoisting 是在代码实际执行时进行的吗，我们来看一个例子：
+根据 [MDN 块级函数定义](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions)，我们可以得出以下结论：
+
+- 在严格模式下，从ES2015开始，在块内进行的函数声明属于这个块，也就是具备块级作用域
+- 在ES2015之前，在块内进行的函数声明是没有块级作用域的
+- 在非严格模式下是不推荐在块内进行函数声明的，因为表现很诡异
+
+---
+
+下面我们就来看下非严格模式下到底是什么情况：
+
+示例代码：
 
 ```js
-console.log(a)
-if (false) {
-  var a = 1
+console.log(foo)
+if (true) {
+  function foo() {
+    console.log("foo")
+  }
 }
 ```
 
-执行结果为：`undefined`，可见虽然if内的代码没有执行，变量a的声明还是被提升到了当前作用域的最顶部
+执行结果：
 
-再看一个例子：
-
-```js
-function foo() {
-  bar();
-  function bar() {
-    console.log(a);
-  }
-  if (false) {
-    var a = 1;
-  }
-}
-
-foo();
+```bash
+undefined
 ```
 
-代码执行结果同样为：`undefined`
+可见，`foo`被提升了，并且值为`undefined`
 
-通过上面两个例子我们基本可以得出一个结论：**声明提升是发生在代码实际运行之前的**
+---
 
-其实这里的运行之前，我们可以理解为编译阶段，因为js引擎在实际执行代码之前确实存在编译阶段，在这个阶段中，我们的代码会被转换成AST（抽象语法树）
+示例代码：
+
+```js
+console.log(foo)
+if(true) {
+  console.log(foo)
+  foo = 10
+  function foo() {
+    console.log("foo")
+  }
+  console.log(foo)
+}
+console.log(foo)
+```
+
+执行结果：
+
+```bash
+undefined
+[Function: foo]
+10
+10
+```
+
+上面的代码可以等价于这个：
+
+```js
+var foo
+console.log(foo)
+if(true) {
+  let foo_1
+  foo_1 = function() {
+    console.log("foo")
+  }
+  console.log(foo_1)
+  foo_1 = 10
+  foo = foo_1
+  console.log(foo_1)
+}
+console.log(foo)
+```
+
+---
+
+```js
+console.log(foo)
+if(true) {
+  console.log(foo)
+  function foo() {
+    console.log("foo")
+  }
+  foo = 10
+  console.log(foo)
+}
+console.log(foo)
+```
+
+执行结果：
+
+```bash
+undefined
+[Function: foo]
+10
+[Function: foo]
+```
+
+上面的代码可以等价于这个：
+
+```js
+var foo
+console.log(foo)
+if(true) {
+  let foo_1
+  foo_1 = function() {
+    console.log("foo")
+  }
+  console.log(foo_1)
+  foo = foo_1
+  foo_1 = 10
+  console.log(foo_1)
+}
+console.log(foo)
+```
+
+所以说表现是很诡异的，具体可以看 stackoverflow 上这个提问： [What are the precise semantics of block-level functions in ES6?](https://stackoverflow.com/questions/31419897/what-are-the-precise-semantics-of-block-level-functions-in-es6)
 
 ## 参考链接
 
