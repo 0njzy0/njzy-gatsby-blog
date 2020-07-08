@@ -83,7 +83,7 @@ function logEvenOrOdd(n) {
 }
 ```
 
-可见这里foo和bar进行了相互递归调用，如果不存在 Hoisting，它们之前的相互调用是根本没办法实现的
+可见这里 `loop` 和 `logEvenOrOdd` 进行了相互递归调用，如果不存在 Hoisting，它们之前的相互调用是根本没办法实现的
 
 ## 变量声明和函数声明提升的区别
 
